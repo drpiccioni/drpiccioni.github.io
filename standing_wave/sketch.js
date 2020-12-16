@@ -29,11 +29,21 @@ function setup() {
   speedSliderLabel = createP('&omega '+/ '+&pi; = '+speedSlider.value());
   speedSliderLabel.parent('sketch-holder');
   speedSliderLabel.position(20,speedSlider.y+10);
+
+  phiSlider = createSlider(0.0,2.0,0.1,0.1);
+  phiSlider.parent('sketch-holder');
+  phiSlider.position(20,40);
+  phiSlider.class("sim-slider gray");
+  phiSliderLabel = createP('&phi '+/ '+&pi; = '+phiSlider.value());
+  phiSliderLabel.parent('sketch-holder');
+  phiSliderLabel.position(20,phiSlider.y+10);
+
 }
 
 function draw() {
   background(255);
   speedSliderLabel.html('&omega '+/ '+&pi; = '+speedSlider.value());
+  phiSliderLabel.html('&phi '+/ '+&pi; = '+phiSlider.value());
   //t = millis()/1000;
   translate(0,height/2);
 
@@ -57,6 +67,7 @@ function draw() {
   pop();
   //dt = speedSlider.value();
   omega = speedSlider.value()*Math.PI;
+  phi   = phiSlider.value()*Math.PI
   t = t+dt;
 }
 
