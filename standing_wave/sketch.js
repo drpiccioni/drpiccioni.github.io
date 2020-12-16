@@ -40,8 +40,8 @@ function setup() {
 
 function draw() {
   background(255);
-  speedSliderLabel.html('&omega;'+'&pi; = '+speedSlider.value());
-  phiSliderLabel.html('&phi;'+'&pi; = '+phiSlider.value());
+  speedSliderLabel.html('&omega;'+ '/ '+ '&pi; = '+speedSlider.value());
+  phiSliderLabel.html('&phi;'+ '/ '+ '&pi; = '+phiSlider.value());
   //t = millis()/1000;
   translate(0,height/2);
 
@@ -92,7 +92,7 @@ function calcSum() {
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
 //    y[x] =  Math.sin(k * x + omega * t)*amplitude + Math.sin(k * x - omega * t)*amplitude ;
-      y[x] =  Math.sin(omega*(t - x/v))*amplitude + Math.sin(omega*(t - x/v)+phi)*amplitude ;
+      y[x] =  Math.sin(omega*(t - direction*x/v))*amplitude + Math.sin(omega*(t - direction*x/v)+phi)*amplitude;
   }
 
 }
