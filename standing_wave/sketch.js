@@ -1,6 +1,6 @@
 
 var w;                // Width of entire wave
-var amplitude = 75.0; // Height of wave
+var amplitude = 70.0; // Height of wave
 var wavelength = 50;   // How many pixels before the wave repeats
 var dx;               // Value for incrementing x
 var yvalues;  // Using an array to store height values for the wave
