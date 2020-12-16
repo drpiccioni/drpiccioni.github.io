@@ -14,11 +14,11 @@ function setup() {
   frameRate(30);
   canvas = createCanvas(windowWidth, 0.9*windowHeight);
   canvas.parent('sketch-holder');
-  w = width+12;
+  w = width;
 
   y = new Array(200);
 
-  speedSlider = createSlider(0.0,2.0,0.05,0.01);
+  speedSlider = createSlider(0.0,2.0,0.001,0.001);
   speedSlider.parent('sketch-holder');
   speedSlider.position(20,20);
   speedSlider.class("sim-slider gray");
@@ -34,8 +34,8 @@ function draw() {
   translate(0,height/2);
 
   calcWave(1);
-  renderLine(color(250,0,0),1);
-//  renderLine(color(0,250,0),1);
+//  renderLine(color(250,0,0),1);
+  renderLine(color(0,250,0),1);
 
   calcWave(-1);
   renderLine(color(0,0,250),1);
