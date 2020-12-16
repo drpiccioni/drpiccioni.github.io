@@ -52,6 +52,7 @@ function draw() {
   line(0,height/2,width,height/2);
   pop();
   //dt = speedSlider.value();
+  omega = speedSlider.value();
   t = t+dt;
 }
 
