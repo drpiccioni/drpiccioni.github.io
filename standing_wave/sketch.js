@@ -24,15 +24,15 @@ function setup() {
   speedSlider.parent('sketch-holder');
   speedSlider.position(20,20);
   speedSlider.class("sim-slider gray");
-  speedSliderLabel = createP('&omega /&pi; = '+speedSlider.value());
+  speedSliderLabel = createP('&omega;'+'&omega; = '+speedSlider.value());
   speedSliderLabel.parent('sketch-holder');
   speedSliderLabel.position(20,speedSlider.y+10);
 
-  phiSlider = createSlider(0.0,2.0,0.1,0.1);
+  phiSlider = createSlider(0.0,20,1,1);
   phiSlider.parent('sketch-holder');
   phiSlider.position(20,40);
   phiSlider.class("sim-slider gray");
-  phiSliderLabel = createP('&phi /&pi; = '+phiSlider.value());
+  phiSliderLabel = createP('&phi; '+ '/ '+ '&pi; = '+phiSlider.value());
   phiSliderLabel.parent('sketch-holder');
   phiSliderLabel.position(20,phiSlider.y+10);
 
@@ -40,7 +40,7 @@ function setup() {
 
 function draw() {
   background(255);
-  speedSliderLabel.html('&omega /&pi; = '+speedSlider.value());
+  speedSliderLabel.html('&omega;'+'&omega; = '+speedSlider.value());
   phiSliderLabel.html('&phi /&pi; = '+phiSlider.value());
   //t = millis()/1000;
   translate(0,height/2);
