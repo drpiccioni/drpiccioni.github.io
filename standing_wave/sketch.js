@@ -1,10 +1,11 @@
 
 var w;                // Width of entire wave
 var amplitude = 50.0; // Height of wave
-var wavelength = 50;   // How many pixels before the wave repeats
+//var wavelength = 50;   // How many pixels before the wave repeats
+var v = 6 // fixed wave speed
 var dx;               // Value for incrementing x
 var yvalues;  // Using an array to store height values for the wave
-var k = 2*Math.PI/wavelength;
+//var k = 2*Math.PI/wavelength;
 var omega = 1;
 var t = 0;
 var dt = .1;
@@ -57,7 +58,8 @@ function calcWave(omega) {
 
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
-    y[x] =  Math.sin(k * x + omega * t)*amplitude;
+//    y[x] =  Math.sin(k * x + omega * t)*amplitude;
+    y[x] =  Math.sin(omega*(t + x/v))*amplitude;
   }
 }
 
@@ -65,7 +67,8 @@ function calcSum() {
 
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
-    y[x] =  Math.sin(k * x + omega * t)*amplitude + Math.sin(k * x - omega * t)*amplitude ;
+//    y[x] =  Math.sin(k * x + omega * t)*amplitude + Math.sin(k * x - omega * t)*amplitude ;
+      y[x] =  Math.sin(omega*(t + x/v))*amplitude + Math.sin(omega*(t - x/v))*amplitude ;
   }
 
 }
