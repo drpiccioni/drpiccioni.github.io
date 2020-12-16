@@ -10,7 +10,7 @@ var omega = Math.PI;
 var phi = 0.5*Math.PI
 var t = 0;
 var dt = 0.1;
-<p id="demo"></p>
+id="demo"
 document.getElementById("demo").innerHTML = 5 + 6;
 
 function setup() {
