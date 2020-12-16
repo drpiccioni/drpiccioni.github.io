@@ -51,7 +51,7 @@ function draw() {
   stroke(0);
   line(0,height/2,width,height/2);
   pop();
-  dt = speedSlider.value();
+  //dt = speedSlider.value();
   t = t+dt;
 }
 
