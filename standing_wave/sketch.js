@@ -6,16 +6,19 @@ var v = 12 // fixed wave speed
 var dx;               // Value for incrementing x
 var yvalues;  // Using an array to store height values for the wave
 //var k = 2*Math.PI/wavelength;
-var omega = 1*Math.PI;
+var omega = Math.PI;
 var phi = 0.5*Math.PI
 var t = 0;
 var dt = 0.1;
+<p id="demo"></p>
+document.getElementById("demo").innerHTML = 5 + 6;
+
 function setup() {
 
   frameRate(30);
   canvas = createCanvas(windowWidth, 0.9*windowHeight);
   canvas.parent('sketch-holder');
-  w = width;
+  w = 0.5*width;
 
   y = new Array(200);
 
