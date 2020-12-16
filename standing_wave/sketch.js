@@ -16,7 +16,7 @@ function setup() {
   frameRate(30);
   canvas = createCanvas(windowWidth, 0.9*windowHeight);
   canvas.parent('sketch-holder');
-  w = width*Math.PI*v;
+  w = 2*width*Math.PI*v/3;
 
   y = new Array(200);
 
