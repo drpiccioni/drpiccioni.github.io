@@ -18,7 +18,7 @@ function setup() {
 
   y = new Array(200);
 
-  speedSlider = createSlider(-.2, .2, .05,.01);
+  speedSlider = createSlider(0.0,2.0,0.05,0.01);
   speedSlider.parent('sketch-holder');
   speedSlider.position(20,20);
   speedSlider.class("sim-slider gray");
