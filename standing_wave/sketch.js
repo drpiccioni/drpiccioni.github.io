@@ -6,7 +6,8 @@ var v = 12 // fixed wave speed
 var dx;               // Value for incrementing x
 var yvalues;  // Using an array to store height values for the wave
 //var k = 2*Math.PI/wavelength;
-var omega = 1;
+var omega = 1*Math.PI;
+var phi = 0.5*Math.PI
 var t = 0;
 var dt = .1;
 function setup() {
@@ -22,14 +23,14 @@ function setup() {
   speedSlider.parent('sketch-holder');
   speedSlider.position(20,20);
   speedSlider.class("sim-slider gray");
-  speedSliderLabel = createP('&omega; = '+abs(speedSlider.value()));
+  speedSliderLabel = createP('&omega/&pi; = '+speedSlider.value()/Math.PI);
   speedSliderLabel.parent('sketch-holder');
   speedSliderLabel.position(20,speedSlider.y+10);
 }
 
 function draw() {
   background(255);
-  speedSliderLabel.html('&omega; = '+abs(speedSlider.value()));
+  speedSliderLabel.html('&omega/&pi; = '+speedSlider.value()/Math.PI);
   //t = millis()/1000;
   translate(0,height/2);
 
@@ -52,7 +53,7 @@ function draw() {
   line(0,height/2,width,height/2);
   pop();
   //dt = speedSlider.value();
-  omega = speedSlider.value();
+  omega = speedSlider.value()*Math.PI;
   t = t+dt;
 }
 
@@ -61,7 +62,7 @@ function calcWave(direction) {
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
 //    y[x] =  Math.sin(k * x + omega * t)*amplitude;
-    y[x] =  Math.sin(omega*(t + direction*x/v))*amplitude;
+    y[x] =  Math.sin(omega*(t + direction*x/v)+phi)*amplitude;
   }
 }
 
@@ -70,7 +71,7 @@ function calcSum() {
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
 //    y[x] =  Math.sin(k * x + omega * t)*amplitude + Math.sin(k * x - omega * t)*amplitude ;
-      y[x] =  Math.sin(omega*(t + x/v))*amplitude + Math.sin(omega*(t - x/v))*amplitude ;
+      y[x] =  Math.sin(omega*(t + x/v)+phi)*amplitude + Math.sin(omega*(t - x/v)+phi)*amplitude ;
   }
 
 }
