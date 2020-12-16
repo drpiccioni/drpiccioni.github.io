@@ -59,7 +59,7 @@ function calcWave(omega) {
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
 //    y[x] =  Math.sin(k * x + omega * t)*amplitude;
-    y[x] =  Math.sin(omega*(t + x/v))*amplitude;
+    y[x] =  Math.sin(omega*(t - x/v))*amplitude;
   }
 }
 
