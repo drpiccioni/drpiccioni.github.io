@@ -20,11 +20,11 @@ function setup() {
 
   y = new Array(200);
 
-  speedSlider = createSlider(0.0,2.0,0.1,0.1);
+  speedSlider = createSlider(0.0,1.0,0.05,0.01);
   speedSlider.parent('sketch-holder');
   speedSlider.position(20,20);
   speedSlider.class("sim-slider gray");
-  speedSliderLabel = createP('&omega;'+'&omega; = '+speedSlider.value());
+  speedSliderLabel = createP('&omega;'+ '/ '+ '&pi; = '+speedSlider.value());
   speedSliderLabel.parent('sketch-holder');
   speedSliderLabel.position(20,speedSlider.y+10);
 
@@ -32,7 +32,7 @@ function setup() {
   phiSlider.parent('sketch-holder');
   phiSlider.position(20,40);
   phiSlider.class("sim-slider gray");
-  phiSliderLabel = createP('&phi; '+ '/ '+ '&pi; = '+phiSlider.value());
+  phiSliderLabel = createP('&phi;'+ '/ '+ '&pi; = '+phiSlider.value());
   phiSliderLabel.parent('sketch-holder');
   phiSliderLabel.position(20,phiSlider.y+10);
 
@@ -40,16 +40,16 @@ function setup() {
 
 function draw() {
   background(255);
-  speedSliderLabel.html('&omega;'+'&omega; = '+speedSlider.value());
-  phiSliderLabel.html('&phi /&pi; = '+phiSlider.value());
+  speedSliderLabel.html('&omega;'+'&pi; = '+speedSlider.value());
+  phiSliderLabel.html('&phi;'+'&pi; = '+phiSlider.value());
   //t = millis()/1000;
   translate(0,height/2);
 
-  calcWave(1);
-//  renderLine(color(250,0,0),1);
+  calcWaveA(1);
+// renderLine(color(250,0,0),1);
   renderLine(color(0,250,0),1);
 
-  calcWave(-1);
+  calcWaveB(-1);
   renderLine(color(0,0,250),1);
 
   calcSum(1);
@@ -69,12 +69,21 @@ function draw() {
   t = t+dt;
 }
 
-function calcWave(direction) {
+function calcWaveA(direction) {
 
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
 //    y[x] =  Math.sin(k * x + omega * t)*amplitude;
-    y[x] =  Math.sin(omega*(t + direction*x/v)+phi)*amplitude;
+    y[x] =  Math.sin(omega*(t - direction*x/v))*amplitude;
+  }
+}
+
+function calcWaveB(direction) {
+
+  x = 0;
+  for (var x = 0; x < y.length; x += 1) {
+//    y[x] =  Math.sin(k * x + omega * t)*amplitude;
+    y[x] =  Math.sin(omega*(t - direction*x/v)+phi)*amplitude;
   }
 }
 
