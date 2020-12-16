@@ -28,7 +28,7 @@ function setup() {
   speedSliderLabel.parent('sketch-holder');
   speedSliderLabel.position(20,speedSlider.y+10);
 
-  phiSlider = createSlider(0.0,20,1,1);
+  phiSlider = createSlider(0.0,1.0,0.1,0.1);
   phiSlider.parent('sketch-holder');
   phiSlider.position(20,40);
   phiSlider.class("sim-slider gray");
@@ -46,8 +46,8 @@ function draw() {
   translate(0,height/2);
 
   calcWaveA(1);
-// renderLine(color(250,0,0),1);
-  renderLine(color(0,250,0),1);
+  renderLine(color(250,0,0),1);
+ // renderLine(color(0,250,0),1);
 
   calcWaveB(-1);
   renderLine(color(0,0,250),1);
@@ -92,7 +92,7 @@ function calcSum() {
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
 //    y[x] =  Math.sin(k * x + omega * t)*amplitude + Math.sin(k * x - omega * t)*amplitude ;
-      y[x] =  Math.sin(omega*(t + x/v)+phi)*amplitude + Math.sin(omega*(t - x/v)+phi)*amplitude ;
+      y[x] =  Math.sin(omega*(t - x/v))*amplitude + Math.sin(omega*(t - x/v)+phi)*amplitude ;
   }
 
 }
