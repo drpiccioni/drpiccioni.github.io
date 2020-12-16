@@ -26,14 +26,14 @@ function setup() {
   speedSlider.parent('sketch-holder');
   speedSlider.position(20,20);
   speedSlider.class("sim-slider gray");
-  speedSliderLabel = createP('&omega / &pi; = '+speedSlider.value()/Math.PI);
+  speedSliderLabel = createP('&omega '+/ '+&pi; = '+speedSlider.value());
   speedSliderLabel.parent('sketch-holder');
   speedSliderLabel.position(20,speedSlider.y+10);
 }
 
 function draw() {
   background(255);
-  speedSliderLabel.html('&omega/&pi; = '+speedSlider.value()/Math.PI);
+  speedSliderLabel.html('&omega '+/ '+&pi; = '+speedSlider.value());
   //t = millis()/1000;
   translate(0,height/2);
 
