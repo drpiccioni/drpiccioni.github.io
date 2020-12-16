@@ -34,8 +34,8 @@ function draw() {
   translate(0,height/2);
 
   calcWave(1);
-  renderLine(color(250,0,0),1);
-//  renderLine(color(0,250,0),1);
+//  renderLine(color(250,0,0),1);
+  renderLine(color(0,250,0),1);
 
   calcWave(-1);
   renderLine(color(0,0,250),1);
@@ -56,12 +56,12 @@ function draw() {
   t = t+dt;
 }
 
-function calcWave(omega) {
+function calcWave(direction) {
 
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
 //    y[x] =  Math.sin(k * x + omega * t)*amplitude;
-    y[x] =  Math.sin(omega*(t - x/v))*2*amplitude;
+    y[x] =  Math.sin(omega*(t + direction*x/v))*amplitude;
   }
 }
 
