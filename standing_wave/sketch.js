@@ -9,7 +9,7 @@ var yvalues;  // Using an array to store height values for the wave
 var omega = 1*Math.PI;
 var phi = 0.5*Math.PI
 var t = 0;
-var dt = .1;
+var dt = 0.1;
 function setup() {
 
   frameRate(30);
@@ -19,11 +19,11 @@ function setup() {
 
   y = new Array(200);
 
-  speedSlider = createSlider(0.0,2.0,0.001,0.001);
+  speedSlider = createSlider(0.0,2.0,0.1,0.1);
   speedSlider.parent('sketch-holder');
   speedSlider.position(20,20);
   speedSlider.class("sim-slider gray");
-  speedSliderLabel = createP('&omega/&pi; = '+speedSlider.value()/Math.PI);
+  speedSliderLabel = createP('&omega / &pi; = '+speedSlider.value()/Math.PI);
   speedSliderLabel.parent('sketch-holder');
   speedSliderLabel.position(20,speedSlider.y+10);
 }
