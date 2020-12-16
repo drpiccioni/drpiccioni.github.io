@@ -2,7 +2,7 @@
 var w;                // Width of entire wave
 var amplitude = 50.0; // Height of wave
 //var wavelength = 50;   // How many pixels before the wave repeats
-var v = 60 // fixed wave speed
+var v = 6 // fixed wave speed
 var dx;               // Value for incrementing x
 var yvalues;  // Using an array to store height values for the wave
 //var k = 2*Math.PI/wavelength;
