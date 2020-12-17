@@ -55,15 +55,15 @@ function draw() {
   translate(7,height/2);  // more fine-tuning
   
   if(showcomp){
-    calcWave(1,amplitude,0,omega,v,phi,t);
+    calcWave(amplitude,0,omega,v,phi,t);
     renderLine(color(250,0,0),1);
 
-    calcWave(-1,0,amplitude,omega,v,phi,t);
+    calcWave(0,amplitude,omega,v,phi,t);
     renderLine(color(0,0,250),1);
 
   }
   
-  calcWave(1,amplitude,amplitude,omega,v,phi,t);
+  calcWave(amplitude,amplitude,omega,v,phi,t);
   renderLine(color(0,0,0),1);
 
   push();
@@ -74,11 +74,11 @@ function draw() {
   t = t+dt;
 }
 
-function calcWave(direction_,ampA_,ampB_,omega_,v_,phi_,t_) {
+function calcWave(ampR_,ampL_,omega_,v_,phi_,t_) {
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
-    y[x] =  ampA_*Math.sin(omega_*(t_ - direction_*x/v_)) +      
-            ampB_*Math.sin(omega_*(t_ + direction_*x/v_)+phi_);
+    y[x] =  ampR_*Math.sin(omega_*(t_ - x/v_)) +      
+            ampL_*Math.sin(omega_*(t_ + x/v_)+phi_);
   }
 }
 
