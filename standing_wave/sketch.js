@@ -16,7 +16,7 @@ function setup() {
   frameRate(30);
   canvas = createCanvas(windowWidth, 0.9*windowHeight);
   canvas.parent('sketch-holder');
-  w = 2*width*Math.PI*v/3;
+  w = 2*width*Math.PI*v/5;
 
   y = new Array(200);
 
@@ -28,13 +28,13 @@ function setup() {
   speedSliderLabel.parent('sketch-holder');
   speedSliderLabel.position(20,speedSlider.y+10);
 
-  phiSlider = createSlider(0.0,1.0,0.1,0.1);
+  phiSlider = createSlider(0.0,1.0,1.0,0.1);
   phiSlider.parent('sketch-holder');
-  phiSlider.position(20,40);
+  phiSlider.position(80,20);
   phiSlider.class("sim-slider gray");
   phiSliderLabel = createP('&phi;'+ ' / '+ '&pi; = '+phiSlider.value());
   phiSliderLabel.parent('sketch-holder');
-  phiSliderLabel.position(20,phiSlider.y+10);
+  phiSliderLabel.position(80,phiSlider.y+10);
 
 }
 
