@@ -46,8 +46,8 @@ function draw() {
   translate(0,height/2);
 
   calcWaveA(1);
-  renderLine(color(250,0,0),1);
- // renderLine(color(0,250,0),1);
+  //renderLine(color(250,0,0),1);
+  renderLine(color(0,250,0),1);
 
   calcWaveB(-1);
   renderLine(color(0,0,250),1);
