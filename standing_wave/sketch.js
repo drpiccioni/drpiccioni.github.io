@@ -7,7 +7,7 @@ var dx;               // Value for incrementing x
 var yvalues;  // Using an array to store height values for the wave
 //var k = 2*Math.PI/wavelength;
 var omega = Math.PI;
-var phi = 0.5*Math.PI
+var phi   = Math.PI;
 var t = 0;
 var dt = 0.1;
 
