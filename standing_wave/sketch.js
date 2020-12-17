@@ -10,7 +10,7 @@ var dt = 0.1;
 
 function setup() {
   frameRate(30);
-  canvas = createCanvas(2*windowWidth/3, 0.9*windowHeight);
+  canvas = createCanvas(0.7*windowWidth, 0.9*windowHeight);
   canvas.parent('sketch-holder');
 
   y = new Array(200);
