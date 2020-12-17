@@ -14,7 +14,7 @@ function setup() {
   y = new Array(200);
     
   omegaSlider = createSlider(0.1,1,0.5,0.1);
-  speedSlider.parent('sketch-holder');
+  omegaSlider.parent('sketch-holder');
   omegaSlider.position(20,20);
   omegaSlider.class("sim-slider gray");
   omegaSliderLabel = createP()
@@ -28,7 +28,7 @@ function setup() {
   phiSliderLabel.position(200,phiSlider.y+10);
 
   compSlider = createSlider(0,1,1,1);
-//  compSlider.parent('sketch-holder');
+  compSlider.parent('sketch-holder');
   compSlider.position(400,20);
   compSlider.class("sim-slider gray");
   compSliderLabel = createP();
