@@ -16,7 +16,7 @@ function setup() {
   frameRate(30);
   canvas = createCanvas(windowWidth, 0.9*windowHeight);
   canvas.parent('sketch-holder');
-  w = 2*width*Math.PI*v/5;
+//  w = 2*width*Math.PI*v/5;
 
   y = new Array(200);
 
@@ -28,13 +28,13 @@ function setup() {
   speedSliderLabel.parent('sketch-holder');
   speedSliderLabel.position(20,speedSlider.y+10);
 
-  phiSlider = createSlider(0.0,1.0,1.0,0.1);
+  phiSlider = createSlider(0.0,1.0,1.0,1.0);
   phiSlider.parent('sketch-holder');
-  phiSlider.position(80,20);
+  phiSlider.position(200,20);
   phiSlider.class("sim-slider gray");
   phiSliderLabel = createP('&phi;'+ ' / '+ '&pi; = '+phiSlider.value());
   phiSliderLabel.parent('sketch-holder');
-  phiSliderLabel.position(80,phiSlider.y+10);
+  phiSliderLabel.position(200,phiSlider.y+10);
 
 }
 
@@ -73,7 +73,6 @@ function calcWaveA(direction) {
 
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
-//    y[x] =  Math.sin(k * x + omega * t)*amplitude;
     y[x] =  Math.sin(omega*(t - direction*x/v))*amplitude;
   }
 }
@@ -82,7 +81,6 @@ function calcWaveB(direction) {
 
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
-//    y[x] =  Math.sin(k * x + omega * t)*amplitude;
     y[x] =  Math.sin(omega*(t - direction*x/v)+phi)*amplitude;
   }
 }
@@ -91,7 +89,6 @@ function calcSum(direction) {
 
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
-//    y[x] =  Math.sin(k * x + omega * t)*amplitude + Math.sin(k * x - omega * t)*amplitude ;
       y[x] =  Math.sin(omega*(t - direction*x/v))*amplitude + Math.sin(omega*(t + direction*x/v)+phi)*amplitude;
   }
 
