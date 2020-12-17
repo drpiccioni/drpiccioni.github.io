@@ -24,7 +24,7 @@ function setup() {
   speedSlider.parent('sketch-holder');
   speedSlider.position(20,20);
   speedSlider.class("sim-slider gray");
-  speedSliderLabel = createP('&omega;'+ '/ '+ '&pi; = '+speedSlider.value());
+  speedSliderLabel = createP('&omega;'+ ' / '+ '&pi; = '+speedSlider.value());
   speedSliderLabel.parent('sketch-holder');
   speedSliderLabel.position(20,speedSlider.y+10);
 
@@ -32,7 +32,7 @@ function setup() {
   phiSlider.parent('sketch-holder');
   phiSlider.position(20,40);
   phiSlider.class("sim-slider gray");
-  phiSliderLabel = createP('&phi;'+ '/ '+ '&pi; = '+phiSlider.value());
+  phiSliderLabel = createP('&phi;'+ ' / '+ '&pi; = '+phiSlider.value());
   phiSliderLabel.parent('sketch-holder');
   phiSliderLabel.position(20,phiSlider.y+10);
 
@@ -40,8 +40,8 @@ function setup() {
 
 function draw() {
   background(255);
-  speedSliderLabel.html('&omega;'+ '/ '+ '&pi; = '+speedSlider.value());
-  phiSliderLabel.html('&phi;'+ '/ '+ '&pi; = '+phiSlider.value());
+  speedSliderLabel.html('&omega;'+ ' / '+ '&pi; = '+speedSlider.value());
+  phiSliderLabel.html('&phi;'+ ' / '+ '&pi; = '+phiSlider.value());
   //t = millis()/1000;
   translate(0,height/2);
 
@@ -87,12 +87,12 @@ function calcWaveB(direction) {
   }
 }
 
-function calcSum() {
+function calcSum(direction) {
 
   x = 0;
   for (var x = 0; x < y.length; x += 1) {
 //    y[x] =  Math.sin(k * x + omega * t)*amplitude + Math.sin(k * x - omega * t)*amplitude ;
-      y[x] =  Math.sin(omega*(t - direction*x/v))*amplitude + Math.sin(omega*(t - direction*x/v)+phi)*amplitude;
+      y[x] =  Math.sin(omega*(t - direction*x/v))*amplitude + Math.sin(omega*(t + direction*x/v)+phi)*amplitude;
   }
 
 }
