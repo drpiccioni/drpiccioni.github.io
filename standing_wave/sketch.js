@@ -20,7 +20,7 @@ function setup() {
 
   y = new Array(200);
 
-  speedSlider = createSlider(0.0,1.0,0.05,0.01);
+  speedSlider = createSlider(0.0,1.0,0.0,0.1);
   speedSlider.parent('sketch-holder');
   speedSlider.position(20,20);
   speedSlider.class("sim-slider gray");
@@ -28,7 +28,7 @@ function setup() {
   speedSliderLabel.parent('sketch-holder');
   speedSliderLabel.position(20,speedSlider.y+10);
 
-  phiSlider = createSlider(0.0,1.0,1.0,1.0);
+  phiSlider = createSlider(0.0,1.0,0.0,1.0);
   phiSlider.parent('sketch-holder');
   phiSlider.position(200,20);
   phiSlider.class("sim-slider gray");
