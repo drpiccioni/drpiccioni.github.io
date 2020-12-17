@@ -1,6 +1,6 @@
 
 var amplitude = 50.0; // Height of wave
-var v = 12; // fixed wave speed
+var v = 10; // fixed wave speed
 var dx;               // Value for incrementing x
 var yvalues;  // Using an array to store height values for the wave
 var omega = Math.PI;
@@ -10,7 +10,7 @@ var dt = 0.1;
 
 function setup() {
   frameRate(30);
-  canvas = createCanvas(0.7*windowWidth, 0.9*windowHeight);
+  canvas = createCanvas(windowWidth, 0.9*windowHeight);
   canvas.parent('sketch-holder');
 
   y = new Array(200);
@@ -40,8 +40,8 @@ function draw() {
   translate(0,height/2);
 
   calcWaveA(1);
-  //renderLine(color(250,0,0),1);
-  renderLine(color(0,250,0),1);
+  renderLine(color(250,0,0),1);
+  //renderLine(color(0,250,0),1);
 
   calcWaveB(-1);
   renderLine(color(0,0,250),1);
