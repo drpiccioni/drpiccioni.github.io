@@ -3,7 +3,7 @@ var omega = 0;
 var phi   = 0;
 var t = 0;
 var dt = 0.1;
-var v = 5.92         // fine-tuning by the Almighty
+var v = 5.94         // fine-tuning by the Almighty
 var tScale = 0.3    // about right on my system
 
 function setup() {
