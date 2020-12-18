@@ -3,16 +3,21 @@ var omega = 0;
 var phi   = 0;
 var t = 0;
 var dt = 0.1;
-var v = 5.94         // fine-tuning by the Almighty
-var tScale = 0.3    // about right on my system
+//var v = 5.93          // fine-tuning for p5 webIDE 
+var v = 5.94          // fine-tuning for webpage
+var tScale = 0.3      // about right on my system
 
 function setup() {
   
   frameRate(30);
+  //canvas = createCanvas(0.9*windowWidth, 0.9*windowHeight);
   canvas = createCanvas(0.7*windowWidth, 0.9*windowHeight);
   canvas.parent('sketch-holder');
+  
   y = new Array(200);
-    
+
+  createToggles();
+  
   omegaSlider = createSlider(0.1,1,0.5,0.1);
   omegaSlider.parent('sketch-holder');
   omegaSlider.position(20,20);
@@ -20,20 +25,51 @@ function setup() {
   omegaSliderLabel = createP()
   omegaSliderLabel.position(20,omegaSlider.y+10);
  
-  phiSlider = createSlider(0,1,1,1);
-  phiSlider.parent('sketch-holder');
-  phiSlider.position(200,20);
-  phiSlider.class("sim-slider gray");
-  phiSliderLabel = createP()
-  phiSliderLabel.position(200,phiSlider.y+10);
+}
 
-  compSlider = createSlider(0,1,1,1);
-  compSlider.parent('sketch-holder');
-  compSlider.position(400,20);
-  compSlider.class("sim-slider gray");
-  compSliderLabel = createP();
-  compSliderLabel.position(400,compSlider.y+10);
+function createToggles() {
+  push();
+  showComp = true;
+  toggleCompButton = createButton('eggs');
+  toggleCompButton.html('hide components');
+  toggleCompButton.position(400, 20);
+  toggleCompButton.mousePressed(toggleComp);
+  toggleCompButton.class('sim-button')
 
+  freeBoundary = true;
+  toggleBoundaryButton = createButton('eggs');
+  toggleBoundaryButton.html('fix boundaries');
+  toggleBoundaryButton.class('sim-button')
+  toggleBoundaryButton.position(200, 20);
+  toggleBoundaryButton.mousePressed(toggleBoundary);
+  
+  running = true;
+
+  toggleCompButton.parent('sketch-holder');
+  toggleBoundaryButton.parent('sketch-holder');
+
+  pop();
+}
+
+function toggleComp() {
+  if (showComp) {
+    showComp = false;
+    toggleCompButton.html('show components');
+
+  } else {
+    showComp = true;
+    toggleCompButton.html('hide components');
+  }
+}
+
+function toggleBoundary() {
+  if (freeBoundary) {
+    freeBoundary = false;
+    toggleBoundaryButton.html('liberate boundaries');
+  } else {
+    freeBoundary = true;
+    toggleBoundaryButton.html('fix boundaries');
+  }
 }
 
 function draw() {
@@ -41,20 +77,18 @@ function draw() {
   background(255);
   
   omegaSliderLabel.html('&omega;'+' / '+'&pi; = '+omegaSlider.value());
-  
-  phiSliderLabel.html('&phi;'+ ' / '+'&pi; = '+phiSlider.value());
-  
-  compSliderLabel.html('components');
-  
+    
   omega = tScale*omegaSlider.value()*Math.PI;
 
-  phi   = phiSlider.value()*Math.PI
-
-  showcomp = compSlider.value()
+  if (freeBoundary) {
+    phi = 0
+  } else {
+    phi = Math.PI
+  }
 
   translate(7,height/2);  // more fine-tuning
   
-  if(showcomp){
+  if(showComp){
     calcWave(amplitude,0,omega,v,phi,t);
     renderLine(color(250,0,0),1);
 
