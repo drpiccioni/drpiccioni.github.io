@@ -6,44 +6,29 @@
 
 // create two y tables, one for the left-propagating pulse, the other for the right-propagating pulse, add them and display the result.
 
-var numEle = 157;
+//console.log("eggs", Math.sqrt(2*2));
+var numEle = 300;
 var eleR = [];
 var eleL = [];
 var eleS = [];
-var dx = 10;
-//var boundL = 41;
-var boundR = 90;
-var pTail = 10;
-var pHead = 5;
-var pTailSlope = 3;
-var pHeadSlope = 6;
+var dx = 6;
+var boundL = 100;
+var boundR = 200;
+var pTail = 11;
+var pHead = 11;
+var pSlope = 4;
 var y0 = 200;
-var D = dx;
+var D = 6;
 var n = 0;
+var showElements = true;
+var runAnimation = true;
+
 
 function setup() {
-  canvas = createCanvas(0.9*windowWidth, 0.9*windowHeight);
-  
+  canvas = createCanvas(0.638*windowWidth, 0.9*windowHeight);
+// needs a better way to hide right end  
   canvas.parent('sketch-holder');
-  createToggles();
-  initialize();
-  noLoop();
-}
-
-function draw() {
-  background(255);
-  frameRate(6);
-  propagate();
-  superpose();
-  display();
-  n ++;
-  if (n > numEle) {
-  toggleRunButton.html('Sorry</br>To watch this again you have to restart the program</br> Clicking this button does nothing');
-  }
-}
-
-function initialize() {
-  // initialize medium
+    
   for (let i = 0; i < numEle; i++) {
     eleR[i] = y0;
   }
@@ -52,67 +37,105 @@ function initialize() {
     eleL[i] = y0;
   }
 
-  // right-moving pulses  
+  // pulses  
 
-   for (let i = 0; i < pTail; i++) {
-    eleR[i] = -pTailSlope*(i+1) + y0;
+  for (let i = boundL; i < boundL+pTail; i++) {
+    eleR[i] = -pSlope*(i-boundL) + y0;
   }
   
-  eleR[pTail] = -pTailSlope*(pTail)+y0;
+  eleR[boundL+pTail] = -pSlope*(pTail)+y0;
 
-  for (let i = pTail+1; i < pTail+pHead; i++) {
-    eleR[i] = -pHeadSlope*(pTail+pHead-i) + y0;
+  for (let i = boundL+pTail+1; i < boundL+pTail+pHead; i++) {
+    eleR[i] = -pSlope*(boundL+pTail+pHead-i) + y0;
   }
-  
-// for (let i = boundL; i < boundL+pTail; i++) {
-//    eleR[i] = -pTailSlope*(i-boundL) + y0;
-//  }
-  
-//  eleR[boundL+pTail] = -pTailSlope*(pTail)+y0;
-
-//  for (let i = boundL+pTail+1; i < boundL+pTail+pHead; i++) {
-//    eleR[i] = -pHeadSlope*(boundL+pTail+pHead-i) + y0;
-//  }
-
-  // left-moivng pulses
-
 
   for (let i = boundR-pTail-pHead; i < boundR-pTail; i++) {
-    eleL[i] =  -pHeadSlope*(i-boundR+pTail+pHead) + y0;
+    eleL[i] =  -pSlope*(i-boundR+pTail+pHead) + y0;
   }
 
-  eleL[boundR-pTail] = -pTailSlope*(pTail)+y0;
+  eleL[boundR-pTail] = -pSlope*(pTail)+y0;
 
   for (let i = boundR-pTail+1; i < boundR; i++) {
-    eleL[i] =  -pTailSlope*(boundR-i) + y0;
-  }
-  for (let i = numEle-pTail-pHead; i < numEle-pTail; i++) {
-    eleL[i] =  pHeadSlope*(i-numEle+pTail+pHead) + y0;
-  }
-
-  eleL[numEle-pTail] = pTailSlope*(pTail)+y0;
-
-  for (let i = numEle-pTail+1; i < numEle; i++) {
-    eleL[i] =  pTailSlope*(numEle-i) + y0;
+    eleL[i] =  -pSlope*(boundR-i) + y0;
   }
   
+  // reflections
+
+  for (let i = 0; i < pTail; i++) {
+    eleR[i] = pSlope*i + y0;
+  }
+  
+  eleR[pTail] = pSlope*(pTail)+y0;
+
+  for (let i = pTail+1; i < pTail+pHead; i++) {
+    eleR[i] = pSlope*(pTail+pHead-i) + y0;
+  }
+
+  for (let i = numEle-pTail-pHead; i < numEle-pTail; i++) {
+    eleL[i] =  -pSlope*(i-numEle+pTail+pHead) + y0;
+  }
+
+  eleL[numEle-pTail] = -pSlope*(pTail)+y0;
+
+  for (let i = numEle-pTail+1; i < numEle; i++) {
+    eleL[i] =  -pSlope*(numEle-i) + y0;
+  }
+  
+  
+// query lists:  
+//  for (let i = 0; i < numEle; i++) {
+//    console.log("eleR",i,"=", eleR[i])
+//  }
+
+//  for (let i = 0; i < numEle; i++) {
+//    console.log("eleL",i,"=", eleL[i])
+//  }
+
+  
+  for (let i = 0; i < numEle; i++) {
+    eleS[i] = new Ele(i*dx, y0, D, i);
+  }
+ 
+  createToggles()
+  noLoop();
 }
+
 
 function createToggles() {
   push();
+
+//  showElements = true;
+//  toggleElementsButton = createButton('eggs');
+//  toggleElementsButton.html('hide elements');
+//  toggleElementsButton.position(300, 20);
+//  toggleElementsButton.mousePressed(toggleElements);
+//  toggleElementsButton.class('sim-button')
   
   runAnimation = false;
-  toggleRunButton = createButton('start');
-  toggleRunButton.position(windowWidth/2, 20);
+  toggleRunButton = createButton('eggs');
+  toggleRunButton.html('start');
+  toggleRunButton.position(windowWidth/3, 20);
   toggleRunButton.mousePressed(toggleRun);
   toggleRunButton.class('sim-button')
   
   running = true;
 
+//  toggleElementButton.parent('sketch-holder');
   toggleRunButton.parent('sketch-holder');
   
   pop();
 }
+
+//function toggleElements() {
+//  if (showElements) {
+//    showElements = false;
+//    toggleElementsButton.html('show elements');
+//  }
+//  else {
+//    showElements = true;
+//    toggleElementsButton.html('hide elements');
+//  }
+//}
 
 function toggleRun() {
   if (runAnimation) {
@@ -128,37 +151,125 @@ function toggleRun() {
   }
 }
   
+//  if(runAnimation == false) noLoop();
+//  canvas.mousePressed(function() {
+//    runAnimation = !runAnimation;
+//    runAnimation ? loop() : noLoop()
+//  })
+
+
+function draw() {
+  background(255);
+  frameRate(20);
+  n += 1;
+//  console.log("iteration",n)
+  propagate()
+  if(showElements) {
+    eleS.forEach(eleS => {
+      eleS.superpose();
+      eleS.display();
+    });
+  }
+  else {
+//    eleS.forEach(eleS => {
+//      eleS.superpose()
+//    });
+//  for (let i = 0; i < numEle; i++) {
+//    console.log("eleR",i,"=", eleR[i])
+//  }
+//    renderLine(color(0,0,0),2)
+  }
+    if (n > numEle - 126) {noLoop()}
+}
+
 function propagate() {
+
+// query lists:  
+//  console.log("propgate:before propagation")
+
+  for (let i = 0; i < numEle; i++) {
+//    console.log("eleR",i,"=", eleR[i])
+  }
+
+  for (let i = 0; i < numEle; i++) {
+//    console.log("eleL",i,"=", eleL[i])
+  }
+
+// propagation
   for (let i = 1; i < numEle; i++) {
       eleL[i] = eleL[i+1];
+//      console.log("L shift to i=",i)
   }
   eleL[numEle-1] = y0;
   
   for (let j = numEle-1; j > 0; j--) {
+//      console.log("before j =",j, "eleR[j] =", eleR[j], "eleR[j-1] =",eleR[j-1]);
+//      console.log("R shift to j=",j)
       eleR[j] = eleR[j-1];
+//      console.log("after j =",j, "eleR[j] =", eleR[j]);
   }    
   eleR[0] = y0;
+
+// query lists:  
+//  console.log("propagate:after propagation")
+  
+//  for (let i = 0; i < numEle; i++) {
+//    console.log("eleR",i,"=", eleR[i])
+//  }
+
+//  for (let i = 0; i < numEle; i++) {
+//    console.log("eleL",i,"=", eleL[i])
+//  }
+
 }
 
-function superpose() {
-  for (let k = 0; k < numEle; k++) {
-   eleS[k] = eleR[k] + eleL[k];
+class Ele {
+  constructor(xin, yin, din, idin, rin, lin) {
+    this.x = xin;
+    this.y = yin;
+    this.diameter = din;
+    this.id = idin;
+  }
+  
+  superpose() {
+    for (let k = 0; k < numEle; k++) {
+    eleS[this.id].y = eleR[this.id] + eleL[this.id];
+//    console.log("superpose:after superposition",this.id, eleR[this.id], eleL[this.id]), eleS[this.id].y;
     }
-}
-
-function display() {
-  for (let k = 0; k < numEle; k++) {
+  }
+  
+  display() {
     noStroke();
-    if (k >= 0) {
-      if (k % dx == 0) {
-        fill(250, 117, 0);
+
+    if (this.id < boundR) {
+
+      if (this.id % dx == 0) {
+        fill('red');
       }
+    
       else {
-        fill(114, 171, 144);
+        fill(100);
       }
+
+    ellipse(this.x-dx*(boundL-.5), this.y, this.diameter, this.diameter);
+
     }
-    ellipse(k*dx, eleS[k], D, D);
   }
 }
 
-
+function renderLine(color_,weight_) {
+    //this function puts a line through all the positions defined above.
+//    console.log("renderLine", width);
+    push();
+    noFill();
+    stroke(color_);
+    strokeWeight(weight_);
+    beginShape();
+    xScale = width/boundR;
+    for (let x = boundL; x < boundR; x++) {
+//      console.log("eleS[",x,"].y =", eleS[x].y)
+      curveVertex(map(x,boundL,boundR,0,xScale*boundR), eleS[x].y);
+    }
+    endShape();
+    pop();
+  }
