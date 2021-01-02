@@ -1,98 +1,275 @@
-var amplitude = 50.0; // Height of wave
-var omega = 0;
-var phi   = 0;
-var t = 0;
-var dt = 0.1;
-var v = 5.94         // fine-tuning by the Almighty
-var tScale = 0.3    // about right on my system
+/*
+ * @name Propagate Disturbance
+ * @frame 720,400
+ * @description  based on code from Keith Peters. Multiple-object collision..
+ */
+
+// create two y tables, one for the left-propagating pulse, the other for the right-propagating pulse, add them and display the result.
+
+//console.log("eggs", Math.sqrt(2*2));
+var numEle = 300;
+var eleR = [];
+var eleL = [];
+var eleS = [];
+var dx = 6;
+var boundL = 100;
+var boundR = 200;
+var pTail = 11;
+var pHead = 11;
+var pSlope = 4;
+var y0 = 200;
+var D = 6;
+var n = 0;
+var showElements = true;
+var runAnimation = true;
+
 
 function setup() {
-  
-  frameRate(30);
-  canvas = createCanvas(0.7*windowWidth, 0.9*windowHeight);
+  canvas = createCanvas(0.638*windowWidth, 0.9*windowHeight);
+// needs a better way to hide right end  
   canvas.parent('sketch-holder');
-  y = new Array(200);
     
-  omegaSlider = createSlider(0.1,1,0.5,0.1);
-  omegaSlider.parent('sketch-holder');
-  omegaSlider.position(20,20);
-  omegaSlider.class("sim-slider gray");
-  omegaSliderLabel = createP()
-  omegaSliderLabel.position(20,omegaSlider.y+10);
+  for (let i = 0; i < numEle; i++) {
+    eleR[i] = y0;
+  }
+  
+  for (let i = 0; i < numEle; i++) {
+    eleL[i] = y0;
+  }
+
+  // pulses  
+
+  for (let i = boundL; i < boundL+pTail; i++) {
+    eleR[i] = -pSlope*(i-boundL) + y0;
+  }
+  
+  eleR[boundL+pTail] = -pSlope*(pTail)+y0;
+
+  for (let i = boundL+pTail+1; i < boundL+pTail+pHead; i++) {
+    eleR[i] = -pSlope*(boundL+pTail+pHead-i) + y0;
+  }
+
+  for (let i = boundR-pTail-pHead; i < boundR-pTail; i++) {
+    eleL[i] =  -pSlope*(i-boundR+pTail+pHead) + y0;
+  }
+
+  eleL[boundR-pTail] = -pSlope*(pTail)+y0;
+
+  for (let i = boundR-pTail+1; i < boundR; i++) {
+    eleL[i] =  -pSlope*(boundR-i) + y0;
+  }
+  
+  // reflections
+
+  for (let i = 0; i < pTail; i++) {
+    eleR[i] = pSlope*i + y0;
+  }
+  
+  eleR[pTail] = pSlope*(pTail)+y0;
+
+  for (let i = pTail+1; i < pTail+pHead; i++) {
+    eleR[i] = pSlope*(pTail+pHead-i) + y0;
+  }
+
+  for (let i = numEle-pTail-pHead; i < numEle-pTail; i++) {
+    eleL[i] =  -pSlope*(i-numEle+pTail+pHead) + y0;
+  }
+
+  eleL[numEle-pTail] = -pSlope*(pTail)+y0;
+
+  for (let i = numEle-pTail+1; i < numEle; i++) {
+    eleL[i] =  -pSlope*(numEle-i) + y0;
+  }
+  
+  
+// query lists:  
+//  for (let i = 0; i < numEle; i++) {
+//    console.log("eleR",i,"=", eleR[i])
+//  }
+
+//  for (let i = 0; i < numEle; i++) {
+//    console.log("eleL",i,"=", eleL[i])
+//  }
+
+  
+  for (let i = 0; i < numEle; i++) {
+    eleS[i] = new Ele(i*dx, y0, D, i);
+  }
  
-  phiSlider = createSlider(0,1,1,1);
-  phiSlider.parent('sketch-holder');
-  phiSlider.position(200,20);
-  phiSlider.class("sim-slider gray");
-  phiSliderLabel = createP()
-  phiSliderLabel.position(200,phiSlider.y+10);
-
-  compSlider = createSlider(0,1,1,1);
-  compSlider.parent('sketch-holder');
-  compSlider.position(400,20);
-  compSlider.class("sim-slider gray");
-  compSliderLabel = createP();
-  compSliderLabel.position(400,compSlider.y+10);
-
+  createToggles()
+  noLoop();
 }
+
+
+function createToggles() {
+  push();
+
+//  showElements = true;
+//  toggleElementsButton = createButton('eggs');
+//  toggleElementsButton.html('hide elements');
+//  toggleElementsButton.position(300, 20);
+//  toggleElementsButton.mousePressed(toggleElements);
+//  toggleElementsButton.class('sim-button')
+  
+  runAnimation = false;
+  toggleRunButton = createButton('eggs');
+  toggleRunButton.html('start');
+  toggleRunButton.position(windowWidth/3, 20);
+  toggleRunButton.mousePressed(toggleRun);
+  toggleRunButton.class('sim-button')
+  
+  running = true;
+
+//  toggleElementButton.parent('sketch-holder');
+  toggleRunButton.parent('sketch-holder');
+  
+  pop();
+}
+
+//function toggleElements() {
+//  if (showElements) {
+//    showElements = false;
+//    toggleElementsButton.html('show elements');
+//  }
+//  else {
+//    showElements = true;
+//    toggleElementsButton.html('hide elements');
+//  }
+//}
+
+function toggleRun() {
+  if (runAnimation) {
+    runAnimation = false;
+    toggleRunButton.html('resume');
+    noLoop();
+  }
+  
+  else {
+    runAnimation = true;
+    toggleRunButton.html('freeze');
+    loop();
+  }
+}
+  
+//  if(runAnimation == false) noLoop();
+//  canvas.mousePressed(function() {
+//    runAnimation = !runAnimation;
+//    runAnimation ? loop() : noLoop()
+//  })
+
 
 function draw() {
-  
   background(255);
-  
-  omegaSliderLabel.html('&omega;'+' / '+'&pi; = '+omegaSlider.value());
-  
-  phiSliderLabel.html('&phi;'+ ' / '+'&pi; = '+phiSlider.value());
-  
-  compSliderLabel.html('components');
-  
-  omega = tScale*omegaSlider.value()*Math.PI;
-
-  phi   = phiSlider.value()*Math.PI
-
-  showcomp = compSlider.value()
-
-  translate(7,height/2);  // more fine-tuning
-  
-  if(showcomp){
-    calcWave(amplitude,0,omega,v,phi,t);
-    renderLine(color(250,0,0),1);
-
-    calcWave(0,amplitude,omega,v,phi,t);
-    renderLine(color(0,0,250),1);
-
+  frameRate(20);
+  n += 1;
+//  console.log("iteration",n)
+  propagate()
+  if(showElements) {
+    eleS.forEach(eleS => {
+      eleS.superpose();
+      eleS.display();
+    });
   }
-  
-  calcWave(amplitude,amplitude,omega,v,phi,t);
-  renderLine(color(0,0,0),1);
-
-  push();
-  strokeWeight(1);
-  stroke(0);
-  line(0,0,width,0);
-  pop();
-  t = t+dt;
+  else {
+//    eleS.forEach(eleS => {
+//      eleS.superpose()
+//    });
+//  for (let i = 0; i < numEle; i++) {
+//    console.log("eleR",i,"=", eleR[i])
+//  }
+//    renderLine(color(0,0,0),2)
+  }
+    if (n > numEle - 126) {noLoop()}
 }
 
-function calcWave(ampR_,ampL_,omega_,v_,phi_,t_) {
-  x = 0;
-  for (var x = 0; x < y.length; x += 1) {
-    y[x] =  ampR_*Math.sin(omega_*(t_ - x/v_)) +      
-            ampL_*Math.sin(omega_*(t_ + x/v_)+phi_);
+function propagate() {
+
+// query lists:  
+//  console.log("propgate:before propagation")
+
+  for (let i = 0; i < numEle; i++) {
+//    console.log("eleR",i,"=", eleR[i])
   }
+
+  for (let i = 0; i < numEle; i++) {
+//    console.log("eleL",i,"=", eleL[i])
+  }
+
+// propagation
+  for (let i = 1; i < numEle; i++) {
+      eleL[i] = eleL[i+1];
+//      console.log("L shift to i=",i)
+  }
+  eleL[numEle-1] = y0;
+  
+  for (let j = numEle-1; j > 0; j--) {
+//      console.log("before j =",j, "eleR[j] =", eleR[j], "eleR[j-1] =",eleR[j-1]);
+//      console.log("R shift to j=",j)
+      eleR[j] = eleR[j-1];
+//      console.log("after j =",j, "eleR[j] =", eleR[j]);
+  }    
+  eleR[0] = y0;
+
+// query lists:  
+//  console.log("propagate:after propagation")
+  
+//  for (let i = 0; i < numEle; i++) {
+//    console.log("eleR",i,"=", eleR[i])
+//  }
+
+//  for (let i = 0; i < numEle; i++) {
+//    console.log("eleL",i,"=", eleL[i])
+//  }
+
 }
 
+class Ele {
+  constructor(xin, yin, din, idin, rin, lin) {
+    this.x = xin;
+    this.y = yin;
+    this.diameter = din;
+    this.id = idin;
+  }
+  
+  superpose() {
+    for (let k = 0; k < numEle; k++) {
+    eleS[this.id].y = eleR[this.id] + eleL[this.id];
+//    console.log("superpose:after superposition",this.id, eleR[this.id], eleL[this.id]), eleS[this.id].y;
+    }
+  }
+  
+  display() {
+    noStroke();
+
+    if (this.id < boundR) {
+
+      if (this.id % dx == 0) {
+        fill('red');
+      }
+    
+      else {
+        fill(100);
+      }
+
+    ellipse(this.x-dx*(boundL-.5), this.y, this.diameter, this.diameter);
+
+    }
+  }
+}
 
 function renderLine(color_,weight_) {
-  //this function puts a line through all the positions defined above.
-  push();
-  noFill();
-  stroke(color_);
-  strokeWeight(weight_);
-  beginShape();
-  for (var x = -1; x < y.length; x += 1) {
-    curveVertex(map(x,0,y.length,0,width), -y[x]);
+    //this function puts a line through all the positions defined above.
+//    console.log("renderLine", width);
+    push();
+    noFill();
+    stroke(color_);
+    strokeWeight(weight_);
+    beginShape();
+    xScale = width/boundR;
+    for (let x = boundL; x < boundR; x++) {
+//      console.log("eleS[",x,"].y =", eleS[x].y)
+      curveVertex(map(x,boundL,boundR,0,xScale*boundR), eleS[x].y);
+    }
+    endShape();
+    pop();
   }
-  endShape();
-  pop();
-}
