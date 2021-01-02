@@ -114,7 +114,7 @@ function createToggles() {
   runAnimation = false;
   toggleRunButton = createButton('eggs');
   toggleRunButton.html('start');
-  toggleRunButton.position(windowWidth/2, 20);
+  toggleRunButton.position(windowWidth/3, 20);
   toggleRunButton.mousePressed(toggleRun);
   toggleRunButton.class('sim-button')
   
