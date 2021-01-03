@@ -33,7 +33,7 @@ function setup() {
 
 function draw() {
   background(255);
-  frameRate(6);
+  frameRate(3);
   propagate();
   superpose();
   display();
