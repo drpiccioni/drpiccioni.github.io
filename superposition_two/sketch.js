@@ -11,13 +11,6 @@ var eleR = [];
 var eleL = [];
 var eleS = [];
 var dx = 10;
-//var boundL = 41;
-var boundR = 50;
-var pAmp  = 10;
-var pTail = 9;
-var pHead = 5;
-var pTailSlope = 4;
-var pHeadSlope = 8;
 var y0 = 200;
 var D = dx;
 var n = 0;
@@ -89,20 +82,20 @@ function initialize() {
   
   // left-moving pulse two
     
-  eleL[77] = y0 +  8;
-  eleL[78] = y0 + 16;
-  eleL[79] = y0 + 24;
-  eleL[80] = y0 + 32;
-  eleL[81] = y0 + 40;
-  eleL[82] = y0 + 36;
-  eleL[83] = y0 + 32;
-  eleL[84] = y0 + 28;
-  eleL[85] = y0 + 24;
-  eleL[86] = y0 + 20;
-  eleL[87] = y0 + 16;
-  eleL[88] = y0 + 12;
-  eleL[89] = y0 +  8;
-  eleL[90] = y0 +  4;
+  eleL[87] = y0 +  8;
+  eleL[88] = y0 + 16;
+  eleL[89] = y0 + 24;
+  eleL[90] = y0 + 32;
+  eleL[91] = y0 + 40;
+  eleL[92] = y0 + 36;
+  eleL[93] = y0 + 32;
+  eleL[94] = y0 + 28;
+  eleL[95] = y0 + 24;
+  eleL[96] = y0 + 20;
+  eleL[97] = y0 + 16;
+  eleL[98] = y0 + 12;
+  eleL[99] = y0 +  8;
+  eleL[100] = y0 +  4;
   
 }
 
